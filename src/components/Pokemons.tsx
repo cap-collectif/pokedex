@@ -5,11 +5,16 @@ import Link from 'next/link'
 
 const GRAPHQL = graphql`
   query PokemonsQuery {
-    pokemons: pokemon_v2_pokemon(limit: 151) {
-      pokemonId: id
+    pokemons: pokemon_v2_pokemonspecies(limit: 11, where: { name: { _ilike: "%" } }) {
       name
-      sprites: pokemon_v2_pokemonsprites {
-        sprites
+      pokemonId: id
+      pokemon_v2_pokemons {
+        weight
+        height
+      }
+      pokemonColor: pokemon_v2_pokemoncolor {
+        pokemonId: id
+        name
       }
     }
   }
@@ -26,7 +31,7 @@ export const Pokemons = () => {
     <div className="p-4">
       <h1 className="mb-5">Pokemons :</h1>
       <div className="grid grid-cols-4 gap-4">
-        {data.pokemons.map(pokemon => {
+        {/* {data.pokemons.map(pokemon => {
           const sprite = pokemon?.sprites[0]?.sprites?.front_default
           return (
             <div key={pokemon.pokemonId}>
@@ -35,7 +40,7 @@ export const Pokemons = () => {
               <Link href={`/pokemon?id=${pokemon.pokemonId}`}>Infos</Link>
             </div>
           )
-        })}
+        })} */}
       </div>
     </div>
   )
