@@ -1,6 +1,7 @@
 import { graphql, useLazyLoadQuery } from 'react-relay'
 import { PokemonsQuery } from '../../__generated__/PokemonsQuery.graphql'
 import { useState } from 'react'
+import PokemonCard from './PokemonCard'
 
 export const Pokemons = () => {
   const [search, setSearch] = useState('')
@@ -26,6 +27,8 @@ export const Pokemons = () => {
 
   const data = useLazyLoadQuery<PokemonsQuery>(GRAPHQL, { searchapi })
 
+  console.log(data)
+
   const handleSubmit = e => {
     e.preventDefault()
     setSearchQuery(search)
@@ -44,14 +47,23 @@ export const Pokemons = () => {
         <button type="submit">Search</button>
       </form>
       <div className="grid grid-cols-4 gap-4">
-        {data.pokemons.map(pokemon => (
-          <div key={pokemon.pokemonId}>
-            <h2>{pokemon.name}</h2>
-            <p>Weight: {pokemon.pokemon_v2_pokemons[0].weight}</p>
-            <p>Height: {pokemon.pokemon_v2_pokemons[0].height}</p>
-            <p>Color: {pokemon.pokemonColor.name}</p>
-          </div>
-        ))}
+        {data.pokemons.map(pokemon => {
+          console.log(pokemon)
+          const { pokemonId, name, pokemon_v2_pokemons, pokemonColor } = pokemon
+
+          return (
+            <PokemonCard
+              key={pokemon.pokemonId}
+              pokemon={{
+                pokemonId: pokemonId,
+                name: name,
+                weight: pokemon_v2_pokemons[0]?.weight,
+                height: pokemon_v2_pokemons[0]?.height,
+                color: pokemonColor?.name,
+              }}
+            />
+          )
+        })}
       </div>
     </div>
   )
