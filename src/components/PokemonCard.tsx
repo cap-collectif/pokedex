@@ -22,12 +22,12 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
   return (
     <Link
       href={`/pokemon?id=${pokemonId}`}
-      className="border-8 w-64 h-96 rounded-2xl border-yellow-200 p-2 "
+      className="border-8 w-64 h-96 rounded-2xl border-yellow-200 p-2 ease-out duration-300 hover:translate-x-1 hover:translate-y-1 hover:shadow-none shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.30)]"
       style={{ backgroundColor: backgroundColorCard }}
     >
       <h2 className=" font-bold">{name}</h2>
       <div
-        className=" shadow-md w-full  bg-white h-36 overflow-hidden flex justify-center items-center border-2 rounded"
+        className=" shadow-md w-full bg-white h-36 overflow-hidden flex justify-center items-center border-2 rounded"
         style={{ borderColor: backgroundColorImage }}
       >
         <img
