@@ -1,17 +1,15 @@
-/* eslint-disable @next/next/no-img-element */
 import { graphql, useLazyLoadQuery } from 'react-relay'
 import { PokemonsQuery } from '../../__generated__/PokemonsQuery.graphql'
-import Link from 'next/link'
 import { useState } from 'react'
 
-// TODO : Add a bit of styling
 export const Pokemons = () => {
   const [search, setSearch] = useState('')
-  const searchapi = `${search}%`
+  const [searchQuery, setSearchQuery] = useState('')
+  const searchapi = `${searchQuery}%`
 
   const GRAPHQL = graphql`
     query PokemonsQuery($searchapi: String!) {
-      pokemons: pokemon_v2_pokemonspecies(limit: 11, where: { name: { _ilike: $searchapi } }) {
+      pokemons: pokemon_v2_pokemonspecies(limit: 150, where: { name: { _ilike: $searchapi } }) {
         name
         pokemonId: id
         pokemon_v2_pokemons {
@@ -28,13 +26,23 @@ export const Pokemons = () => {
 
   const data = useLazyLoadQuery<PokemonsQuery>(GRAPHQL, { searchapi })
 
-  // To help
-  console.log(data)
+  const handleSubmit = e => {
+    e.preventDefault()
+    setSearchQuery(search)
+  }
 
   return (
     <div className="p-4">
       <h1 className="mb-5">Pokemons :</h1>
-      <input type="text" value={search} onChange={e => setSearch(e.target.value)} placeholder="Search for a pokemon" />
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          placeholder="Search for a pokemon"
+        />
+        <button type="submit">Search</button>
+      </form>
       <div className="grid grid-cols-4 gap-4">
         {data.pokemons.map(pokemon => (
           <div key={pokemon.pokemonId}>
