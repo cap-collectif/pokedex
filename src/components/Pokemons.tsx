@@ -16,12 +16,18 @@ export const Pokemons = () => {
         pokemon_v2_pokemons {
           weight
           height
+          pokemon_v2_pokemontypes {
+            pokemon_v2_type {
+              name
+            }
+          }
           pokemon_v2_pokemonabilities {
             pokemon_v2_ability {
               name
             }
           }
         }
+
         pokemonColor: pokemon_v2_pokemoncolor {
           pokemonId: id
           name
@@ -53,7 +59,6 @@ export const Pokemons = () => {
       </form>
       <div className="grid grid-cols-4 gap-4">
         {data.pokemons.map(pokemon => {
-          console.log(pokemon)
           const { pokemonId, name, pokemon_v2_pokemons, pokemonColor } = pokemon
 
           return (
@@ -66,6 +71,7 @@ export const Pokemons = () => {
                 height: pokemon_v2_pokemons[0]?.height,
                 color: pokemonColor?.name,
                 abilities: pokemon_v2_pokemons[0]?.pokemon_v2_pokemonabilities,
+                types: pokemon_v2_pokemons[0]?.pokemon_v2_pokemontypes,
               }}
             />
           )

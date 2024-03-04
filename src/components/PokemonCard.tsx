@@ -11,6 +11,7 @@ interface Pokemon {
   height: number | null | undefined
   color: string
   abilities: Array
+  types: Array
 }
 
 interface PokemonCardProps {
@@ -18,10 +19,10 @@ interface PokemonCardProps {
 }
 
 const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
-  const { name, weight, height, color, pokemonId, abilities } = pokemon
+  const { name, weight, height, color, pokemonId, abilities, types } = pokemon
   const backgroundColorCard = colorToRgba(color ?? 'white', 0.5)
   const backgroundColorImage = colorToRgba(color ?? 'white', 0.7)
-  console.log(abilities)
+  console.log(types)
   return (
     <Link
       href={`/pokemon?id=${pokemonId}`}
@@ -49,6 +50,14 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
         {abilities.map(ability => (
           <span key={ability.name} className="text-sm bg-white rounded px-1">
             {ability.pokemon_v2_ability.name}
+          </span>
+        ))}
+      </div>
+      <div className=" mt-3">
+        <span className="text-sm bg-white rounded px-1">Types : </span>
+        {types.map(type => (
+          <span key={type.name} className="text-sm bg-white rounded px-1">
+            {type.pokemon_v2_type.name}
           </span>
         ))}
       </div>
