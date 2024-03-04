@@ -16,6 +16,11 @@ export const Pokemons = () => {
         pokemon_v2_pokemons {
           weight
           height
+          pokemon_v2_pokemonabilities {
+            pokemon_v2_ability {
+              name
+            }
+          }
         }
         pokemonColor: pokemon_v2_pokemoncolor {
           pokemonId: id
@@ -60,6 +65,7 @@ export const Pokemons = () => {
                 weight: pokemon_v2_pokemons[0]?.weight,
                 height: pokemon_v2_pokemons[0]?.height,
                 color: pokemonColor?.name,
+                abilities: pokemon_v2_pokemons[0]?.pokemon_v2_pokemonabilities,
               }}
             />
           )
