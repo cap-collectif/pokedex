@@ -2,6 +2,7 @@ import Link from 'next/link'
 import React from 'react'
 import colorToRgba from 'color-to-rgba'
 import { convertHectogramToKg } from '@/utils/convertHectogramToKg'
+import { convertDecimeterToCmAndMeter } from '@/utils/convertDecimeterToCmAndMeter'
 
 interface Pokemon {
   pokemonId: number | null | undefined
@@ -38,8 +39,8 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
         />
       </div>
       <div className="flex">
-        <p>Weight: {convertHectogramToKg(weight) + ' kg' ?? 'N/A'}</p>
-        <p>Height: {height ?? 'N/A'}</p>
+        <p className=" text-xs">Weight: {convertHectogramToKg(weight) + ' kg' ?? 'N/A'}</p>
+        <p className=" text-xs">Height: {convertDecimeterToCmAndMeter(height) ?? 'N/A'}</p>
       </div>
     </Link>
   )
