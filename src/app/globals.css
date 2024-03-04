@@ -2,17 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Pokemon Hollow';
+  src:url(../assets/fonts/Pokemon_Hollow.ttf)
+}
+
+@font-face {
+  font-family: 'Pokemon Solid';
+  src:url(../assets/fonts/Pokemon_Solid.ttf)
+}
+
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --light-rgb: 229, 236, 253;
+  --dark-rgb: 25, 34, 39;
+  --foreground-rgb: var(--dark-rgb);
+  --background-start-rgb: var(--light-rgb);
+  --background-end-rgb: var(--light-rgb);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --foreground-rgb: var(--light-rgb);
+    --background-start-rgb: var(--dark-rgb);
+    --background-end-rgb: var(--dark-rgb);
   }
 }
 
@@ -24,6 +36,18 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+    font-weight: 400;
+    font-size: 16px;
+}
+  
+h1, h2, h3 {
+  font-family: 'Pokemon Solid';
+  letter-spacing: 0.3rem;
+}
+
+h4, h5, h6 {
+  font-family: 'Pokemon Hollow';
+  letter-spacing: 0.3rem;
 }
 
 @layer utilities {

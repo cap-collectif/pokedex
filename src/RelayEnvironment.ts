@@ -1,20 +1,13 @@
-import {
-  Environment,
-  Network,
-  RecordSource,
-  Store,
-  FetchFunction,
-} from "relay-runtime";
+import { Environment, Network, RecordSource, Store, FetchFunction } from 'relay-runtime';
 
-const HTTP_ENDPOINT = 'https://beta.pokeapi.co/graphql/v1beta'
+const HTTP_ENDPOINT = 'https://beta.pokeapi.co/graphql/v1beta';
 
 const fetchFn: FetchFunction = async (request, variables) => {
   const resp = await fetch(HTTP_ENDPOINT, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      Accept:
-        "application/graphql-response+json; charset=utf-8, application/json; charset=utf-8",
-      "Content-Type": "application/json",
+      Accept: 'application/graphql-response+json; charset=utf-8, application/json; charset=utf-8',
+      'Content-Type': 'application/json',
       // <-- Additional headers like 'Authorization' would go here
     },
     body: JSON.stringify({
@@ -39,7 +32,7 @@ export function initRelayEnvironment() {
   const environment = relayEnvironment ?? createRelayEnvironment();
 
   // For SSG and SSR always create a new Relay environment.
-  if (typeof window === "undefined") {
+  if (typeof window === 'undefined') {
     return environment;
   }
 
