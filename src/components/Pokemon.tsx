@@ -6,6 +6,12 @@ const GRAPHQL = graphql`
   query PokemonQuery($pokemonId: Int!) {
     pokemon: pokemon_v2_pokemon_by_pk(id: $pokemonId) {
       name
+      weight
+      pokemon_v2_pokemontypes {
+        pokemon_v2_type {
+          name
+        }
+      }
       sprites: pokemon_v2_pokemonsprites {
         sprites
       }
