@@ -51,7 +51,7 @@ export const Pokemons = () => {
   }
 
   return (
-    <div className="p-4">
+    <div className="p-4 ">
       <h1 className="mb-5 text-2xl font-extrabold">POKEDEX</h1>
       <form
         role="search"
@@ -86,7 +86,7 @@ export const Pokemons = () => {
           Clear
         </button>
       </form>
-      <div className="grid grid-cols-4 gap-4 mt-5">
+      <div className="grid grid-cols-4 gap-4 mt-5 place-items-center">
         {data.pokemons.map(pokemon => {
           const { pokemonId, name, pokemon_v2_pokemons, pokemonColor } = pokemon
 

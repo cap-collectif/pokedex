@@ -36,7 +36,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
       >
         <img
           src={`https://img.pokemondb.net/artwork/${name}.jpg`}
-          alt={`image of ${name}`}
+          alt={name}
           className=" w-full h-full object-contain"
         />
       </div>
