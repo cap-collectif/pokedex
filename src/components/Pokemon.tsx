@@ -9,8 +9,23 @@ const GRAPHQL = graphql`
       sprites: pokemon_v2_pokemonsprites {
         sprites
       }
+      pokemon_v2_pokemoncries {
+        cries
+      }
       specy: pokemon_v2_pokemonspecy {
         is_legendary
+        pokemon_v2_pokemonhabitat {
+          name
+        }
+        pokemon_v2_evolutionchain {
+          pokemon_v2_pokemonspecies {
+            name
+            pokeId: id
+            pokemon_v2_pokemoncolor {
+              name
+            }
+          }
+        }
       }
     }
   }
