@@ -45,19 +45,48 @@ export const Pokemons = () => {
     setSearchQuery(search)
   }
 
+  const handleClear = () => {
+    setSearchQuery('')
+    setSearch('')
+  }
+
   return (
     <div className="p-4">
-      <h1 className="mb-5">Pokemons :</h1>
-      <form onSubmit={handleSubmit}>
+      <h1 className="mb-5 text-2xl font-extrabold">POKEDEX</h1>
+      <form
+        role="search"
+        aria-label="Search for a pokemon"
+        onSubmit={handleSubmit}
+        className=" bg-red-400 p-6 rounded-xl shadow-lg flex-nowrap flex"
+      >
+        <label htmlFor="search-input" className="sr-only">
+          Search for a pokemon
+        </label>
         <input
+          id="search-input"
           type="text"
           value={search}
           onChange={e => setSearch(e.target.value)}
           placeholder="Search for a pokemon"
+          className=" text-lg p-4 rounded-lg w-full uppercase "
         />
-        <button type="submit">Search</button>
+        <button
+          type="submit"
+          aria-label="Search"
+          className="font-bold text-sm py-4 px-3 bg-white shadow-[2px_2px_2px_2px_#2d3748] border  rounded ease-out duration-300 hover:translate-x-1 hover:translate-y-1 hover:shadow-none md:text-base mx-4"
+        >
+          Search
+        </button>
+        <button
+          type="button"
+          onClick={() => handleClear()}
+          aria-label="Clear"
+          className="font-bold text-sm  w-20 h-16 rounded-full bg-white shadow-[2px_2px_2px_2px_#2d3748] border rounded ease-out duration-300 hover:translate-x-1 hover:translate-y-1 hover:shadow-none md:text-base"
+        >
+          Clear
+        </button>
       </form>
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-4 gap-4 mt-5">
         {data.pokemons.map(pokemon => {
           const { pokemonId, name, pokemon_v2_pokemons, pokemonColor } = pokemon
 

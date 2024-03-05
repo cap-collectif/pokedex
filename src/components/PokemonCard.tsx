@@ -40,9 +40,9 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
           className=" w-full h-full object-contain"
         />
       </div>
-      <div className="flex">
-        <p className=" text-xs">Weight: {convertHectogramToKg(weight) + ' kg' ?? 'N/A'}</p>
-        <p className=" text-xs">Height: {convertDecimeterToCmAndMeter(height) ?? 'N/A'}</p>
+      <div className="flex justify-evenly">
+        <p className="text-xs">Weight: {convertHectogramToKg(weight) + ' kg' ?? 'N/A'}</p>
+        <p className="text-xs">Height: {convertDecimeterToCmAndMeter(height) ?? 'N/A'}</p>
       </div>
 
       <h3 className=" my-3">Abilities</h3>
