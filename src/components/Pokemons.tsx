@@ -38,8 +38,6 @@ export const Pokemons = () => {
 
   const data = useLazyLoadQuery<PokemonsQuery>(GRAPHQL, { searchapi })
 
-  console.log(data)
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setSearchQuery(search)

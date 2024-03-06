@@ -50,8 +50,6 @@ const GRAPHQL = graphql`
 // TODO : Display the informations you want about the Pokemon, add a bit of styling
 export const Pokemon = ({ pokemonId }: { pokemonId: number }) => {
   const data = useLazyLoadQuery<PokemonQuery>(GRAPHQL, { pokemonId })
-  // To help
-  console.log(data)
   const [displayFront, setDisplayFront] = useState(true)
   const pokemonTypes = data?.pokemon?.pokemon_v2_pokemontypes
   const habitat = data?.pokemon?.specy?.habitat
