@@ -1,12 +1,18 @@
 /* eslint-disable @next/next/no-img-element */
 import { graphql, useLazyLoadQuery } from 'react-relay'
 import { PokemonQuery } from '../../__generated__/PokemonQuery.graphql'
+import ArrowIcon from '@/assets/ArrowIcon'
+import Link from 'next/link'
+import { useState } from 'react'
+import { convertDecimeterToCmAndMeter } from '@/utils/convertDecimeterToCmAndMeter'
+import { convertHectogramToKg } from '@/utils/convertHectogramToKg'
 
 const GRAPHQL = graphql`
   query PokemonQuery($pokemonId: Int!) {
     pokemon: pokemon_v2_pokemon_by_pk(id: $pokemonId) {
       name
       weight
+      height
       pokemon_v2_pokemontypes {
         pokemon_v2_type {
           name
@@ -20,10 +26,10 @@ const GRAPHQL = graphql`
       }
       specy: pokemon_v2_pokemonspecy {
         is_legendary
-        pokemon_v2_pokemonhabitat {
+        habitat: pokemon_v2_pokemonhabitat {
           name
         }
-        pokemon_v2_evolutionchain {
+        evolutionChain: pokemon_v2_evolutionchain {
           pokemon_v2_pokemonspecies {
             name
             pokeId: id
@@ -40,15 +46,103 @@ const GRAPHQL = graphql`
 // TODO : Display the informations you want about the Pokemon, add a bit of styling
 export const Pokemon = ({ pokemonId }: { pokemonId: number }) => {
   const data = useLazyLoadQuery<PokemonQuery>(GRAPHQL, { pokemonId })
-
   // To help
   console.log(data)
 
+  const pokemonTypes = data?.pokemon?.pokemon_v2_pokemontypes
+  const habitat = data?.pokemon?.specy?.habitat
+  const evolutionChain = data?.pokemon?.specy?.evolutionChain
+  const cries = data?.pokemon?.pokemon_v2_pokemoncries
+  console.log(cries)
+
+  // Play the audio sound of the pokemon
+  const playCry = () => {
+    if (cries && cries.length > 0) {
+      const audioUrl = cries[0]?.cries?.latest
+      if (audioUrl) {
+        const audio = new Audio(audioUrl)
+        audio.play()
+      }
+    }
+  }
+
+  console.log(data.pokemon?.sprites[0].sprites)
+  const [displayFront, setDisplayFront] = useState(true)
+
+  const togglePicture = () => {
+    setDisplayFront(!displayFront)
+  }
+
   return (
-    <div>
-      Legendary : {data.pokemon?.specy?.is_legendary ? 'Yes' : 'No'}
-      <img src={data.pokemon?.sprites[0].sprites.front_default} alt={data.pokemon?.name} />
-    </div>
+    <body className=" px-48 py-6">
+      <header className=" flex justify-between items-center mb-11">
+        <Link
+          href="/"
+          className="flex justify-center items-center font-bold text-sm  pr-2 bg-white shadow-[2px_2px_2px_2px_#2d3748] border  rounded ease-out duration-300 hover:translate-x-1 hover:translate-y-1 hover:shadow-none md:text-base "
+        >
+          <ArrowIcon size={64} /> Back
+        </Link>
+        <h1 className=" font-bold text-3xl">{data?.pokemon?.name}</h1>
+      </header>
+      <main>
+        <section className="flex justify-between">
+          <div className="text-xl flex flex-col justify-around">
+            <span>
+              {data?.pokemon?.name} {data.pokemon?.specy?.is_legendary ? 'is legendary !' : 'is not legendary'}
+            </span>
+            <span>Height : {convertDecimeterToCmAndMeter(data?.pokemon?.height)}</span>
+            <span>Weight : {convertHectogramToKg(data?.pokemon?.weight)}</span>
+            <div className="mt-4 flex items-center">
+              <span className="font-bold">Pokemon {pokemonTypes && pokemonTypes?.length > 1 ? 'Types' : 'Type'}:</span>
+              <div className="flex  ">
+                {pokemonTypes?.map((type, index) => {
+                  return (
+                    <span className=" bg-slate-200 rounded-md p-2 ml-2 " key={index}>
+                      {type?.pokemon_v2_type?.name}
+                    </span>
+                  )
+                })}
+              </div>
+            </div>
+            <div className="mt-4">
+              Habitat: <span className="font-bold">{habitat?.name ?? 'Unknown'}</span>
+            </div>
+          </div>
+
+          <div className="border-8 w-64 h-80 rounded-2xl border-yellow-200 p-2 ease-out shadow-lg ">
+            <img
+              src={
+                displayFront
+                  ? data.pokemon?.sprites[0].sprites.front_default
+                  : data.pokemon?.sprites[0].sprites.back_default
+              }
+              alt={data.pokemon?.name}
+              className="w-full h-52 object-contain "
+            />
+            <div className=" flex justify-evenly pb-3">
+              <button
+                className="font-bold text-sm w-20 h-16 rounded-full bg-white shadow-[2px_2px_2px_2px_#2d3748] border rounded ease-out duration-300 hover:translate-x-1 hover:translate-y-1 hover:shadow-none md:text-base"
+                onClick={togglePicture}
+              >
+                {displayFront ? 'Back' : 'Front'}
+              </button>
+
+              <button
+                className="font-bold text-sm  w-20 h-16 rounded-full bg-white shadow-[2px_2px_2px_2px_#2d3748] border rounded ease-out duration-300 hover:translate-x-1 hover:translate-y-1 hover:shadow-none md:text-base"
+                onClick={playCry}
+              >
+                Sound
+              </button>
+            </div>
+          </div>
+        </section>
+        <div>
+          {evolutionChain?.pokemon_v2_pokemonspecies?.map((pokemon, index) => (
+            <span key={index}>{pokemon.name}</span>
+          ))}
+        </div>
+      </main>
+    </body>
   )
 }
 
