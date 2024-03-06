@@ -145,7 +145,7 @@ export const Pokemon = ({ pokemonId }: { pokemonId: number }) => {
           <div className="flex">
             {evolutionChain?.pokemon_v2_pokemonspecies?.map((pokemon, index) => (
               <Link href={`pokemon?id=${pokemon.pokeId}`} key={index} className="flex items-center">
-                <button className="font-bold text-sm px-3 h-12 sm:h-16 rounded-full bg-yellow-200 shadow-md border ease-out duration-300 hover:translate-x-1 hover:translate-y-1 hover:shadow-none md:text-base">
+                <button className="font-bold text-sm px-3 h-12 sm:h-16 rounded-full bg-yellow-200 shadow-md border ease-out duration-300 sm:hover:translate-x-1 sm:hover:translate-y-1 sm:hover:shadow-none md:text-base">
                   {pokemon.name}
                 </button>
                 {index !== evolutionChain?.pokemon_v2_pokemonspecies?.length - 1 && <ArrowIcon size={24} flip />}
