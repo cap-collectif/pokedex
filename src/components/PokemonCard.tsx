@@ -10,8 +10,8 @@ interface Pokemon {
   weight: number | null | undefined
   height: number | null | undefined
   color: string | null | undefined
-  abilities: Array | null | undefined
-  types: Array | null | undefined
+  abilities: { pokemon_v2_ability: { name: string } }[] | null | undefined
+  types: { pokemon_v2_type: { name: string } }[] | null | undefined
 }
 
 interface PokemonCardProps {
@@ -36,7 +36,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
       >
         <img
           src={`https://img.pokemondb.net/artwork/${name}.jpg`}
-          alt={name}
+          alt={name ?? 'empty image of a pokemon card'}
           className=" w-full h-full object-contain"
         />
       </div>
@@ -47,15 +47,15 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
 
       <h3 className=" my-3 font-semibold">Abilities</h3>
       <div className="flex flex-col h-20 justify-around">
-        {abilities.map(ability => (
-          <span key={ability.name} className="text-sm font-light rounded px-2 bg-slate-200 mb-2">
+        {abilities?.map((ability, index) => (
+          <span key={index} className="text-sm font-light rounded px-2 bg-slate-200 mb-2">
             {ability.pokemon_v2_ability.name}
           </span>
         ))}
       </div>
       <div className="mt-3 flex justify-center">
-        {types.map(type => (
-          <span key={type.name} className="text-sm bg-white rounded px-1 mx-2">
+        {types?.map((type, index) => (
+          <span key={index} className="text-sm bg-white rounded px-1 mx-2">
             {type.pokemon_v2_type.name}
           </span>
         ))}

@@ -40,7 +40,7 @@ export const Pokemons = () => {
 
   console.log(data)
 
-  const handleSubmit = e => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setSearchQuery(search)
   }
@@ -99,8 +99,10 @@ export const Pokemons = () => {
                 weight: pokemon_v2_pokemons[0]?.weight,
                 height: pokemon_v2_pokemons[0]?.height,
                 color: pokemonColor?.name,
-                abilities: pokemon_v2_pokemons[0]?.pokemon_v2_pokemonabilities,
-                types: pokemon_v2_pokemons[0]?.pokemon_v2_pokemontypes,
+                abilities: pokemon_v2_pokemons[0]?.pokemon_v2_pokemonabilities as {
+                  pokemon_v2_ability: { name: string }
+                }[],
+                types: pokemon_v2_pokemons[0]?.pokemon_v2_pokemontypes as { pokemon_v2_type: { name: string } }[],
               }}
             />
           )
