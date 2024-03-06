@@ -57,7 +57,7 @@ export const Pokemons = () => {
         role="search"
         aria-label="Search for a pokemon"
         onSubmit={handleSubmit}
-        className=" bg-red-400 p-6 rounded-xl shadow-lg flex-nowrap flex"
+        className=" bg-red-400 p-2 sm:p-6 rounded-xl shadow-lg flex-nowrap flex"
       >
         <label htmlFor="search-input" className="sr-only">
           Search for a pokemon
@@ -68,12 +68,12 @@ export const Pokemons = () => {
           value={search}
           onChange={e => setSearch(e.target.value)}
           placeholder="Search for a pokemon"
-          className=" text-lg p-4 rounded-lg w-full uppercase "
+          className=" text-sm sm:text-lg p-1 sm:p-4 rounded-lg w-full uppercase "
         />
         <button
           type="submit"
           aria-label="Search"
-          className="font-bold text-sm py-4 px-3 bg-white shadow-[2px_2px_2px_2px_#2d3748] border  rounded ease-out duration-300 hover:translate-x-1 hover:translate-y-1 hover:shadow-none md:text-base mx-4"
+          className="font-bold text-sm sm:py-4 sm:px-3 bg-white shadow-[2px_2px_2px_2px_#2d3748] border  rounded ease-out duration-300 sm:hover:translate-x-1 sm:hover:translate-y-1 sm:hover:shadow-none md:text-base mx-4"
         >
           Search
         </button>
@@ -81,7 +81,7 @@ export const Pokemons = () => {
           type="button"
           onClick={() => handleClear()}
           aria-label="Clear"
-          className="font-bold text-sm  w-20 h-16 rounded-full bg-white shadow-[2px_2px_2px_2px_#2d3748] border rounded ease-out duration-300 hover:translate-x-1 hover:translate-y-1 hover:shadow-none md:text-base"
+          className="font-bold text-sm  w-20 sm:h-16 rounded-full bg-white shadow-[2px_2px_2px_2px_#2d3748] border  ease-out duration-300 sm:hover:translate-x-1 sm:hover:translate-y-1 sm:hover:shadow-none md:text-base"
         >
           Clear
         </button>
