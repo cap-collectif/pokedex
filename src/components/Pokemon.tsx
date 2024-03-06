@@ -74,20 +74,20 @@ export const Pokemon = ({ pokemonId }: { pokemonId: number }) => {
   }
 
   return (
-    <body className=" px-48 py-6">
+    <body className="px-4 md:px-28 lg:px-48 py-6">
       <header className=" flex justify-between items-center mb-11">
         <Link
           href="/"
           className="flex justify-center items-center font-bold text-sm  pr-2 bg-white shadow-[2px_2px_2px_2px_#2d3748] border  rounded ease-out duration-300 hover:translate-x-1 hover:translate-y-1 hover:shadow-none md:text-base "
         >
-          <ArrowIcon size={64} /> Back
+          <ArrowIcon size={40} /> Back
         </Link>
-        <h1 className=" uppercase font-bold text-3xl">{data?.pokemon?.name}</h1>
+        <h1 className="uppercase font-bold text-xl md:text-2xl lg:text-3xl">{data?.pokemon?.name}</h1>
       </header>
       <main>
-        <section className="flex justify-between border shadow-lg p-5">
-          <div className="text-xl flex flex-col justify-around">
-            <span className=" font-semibold">
+        <section className="flex items-center md:items-start flex-col-reverse md:flex-row justify-between sm:border sm:shadow-lg p-5">
+          <div className="text-base sm:text-xl lg:text-2xl flex flex-col justify-around py-3">
+            <span className="font-semibold">
               {data?.pokemon?.name} {data.pokemon?.specy?.is_legendary ? 'is legendary !' : 'is not legendary'}
             </span>
             <span>Height : {convertDecimeterToCmAndMeter(data?.pokemon?.height)}</span>
@@ -97,7 +97,7 @@ export const Pokemon = ({ pokemonId }: { pokemonId: number }) => {
               <div className="flex  ">
                 {pokemonTypes?.map((type, index) => {
                   return (
-                    <span className=" bg-slate-200 rounded-md p-2 ml-2 " key={index}>
+                    <span className="bg-slate-200 rounded-md p-2 ml-2 " key={index}>
                       {type?.pokemon_v2_type?.name}
                     </span>
                   )
