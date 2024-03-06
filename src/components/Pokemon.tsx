@@ -127,6 +127,7 @@ export const Pokemon = ({ pokemonId }: { pokemonId: number }) => {
               <button
                 className="font-bold text-sm w-20 h-16 rounded-full bg-white shadow-[2px_2px_2px_2px_#2d3748] border  ease-out duration-300 sm:hover:translate-x-1 sm:hover:translate-y-1 sm:hover:shadow-none md:text-base"
                 onClick={togglePicture}
+                aria-label={displayFront ? 'Show Back Picture' : 'Show Front Picture'}
               >
                 {displayFront ? 'Back' : 'Front'}
               </button>
@@ -134,6 +135,7 @@ export const Pokemon = ({ pokemonId }: { pokemonId: number }) => {
               <button
                 className="font-bold text-sm  w-20 h-16 rounded-full bg-white shadow-[2px_2px_2px_2px_#2d3748] border ease-out duration-300 sm:hover:translate-x-1 sm:hover:translate-y-1 sm:hover:shadow-none md:text-base"
                 onClick={playCry}
+                aria-label="Play Pokemon Sound"
               >
                 Sound
               </button>
@@ -141,11 +143,14 @@ export const Pokemon = ({ pokemonId }: { pokemonId: number }) => {
           </div>
         </section>
         <section className="my-7 flex flex-col items-center">
-          <h3 className="font-bold text-lg sm:text-xl lg:text-2xl mb-7">Evolution of the pokemon</h3>
+          <h2 className="font-bold text-lg sm:text-xl lg:text-2xl mb-7">Evolution of the pokemon</h2>
           <div className="flex">
             {evolutionChain?.pokemon_v2_pokemonspecies?.map((pokemon, index) => (
               <Link href={`pokemon?id=${pokemon.pokeId}`} key={index} className="flex items-center">
-                <button className="font-bold text-sm px-3 h-12 sm:h-16 rounded-full bg-yellow-200 shadow-md border ease-out duration-300 sm:hover:translate-x-1 sm:hover:translate-y-1 sm:hover:shadow-none md:text-base">
+                <button
+                  aria-label={`Navigate to ${pokemon.name} page`}
+                  className="font-bold text-sm px-3 h-12 sm:h-16 rounded-full bg-yellow-200 shadow-md border ease-out duration-300 sm:hover:translate-x-1 sm:hover:translate-y-1 sm:hover:shadow-none md:text-base"
+                >
                   {pokemon.name}
                 </button>
                 {index !== evolutionChain?.pokemon_v2_pokemonspecies?.length - 1 && <ArrowIcon size={24} flip />}

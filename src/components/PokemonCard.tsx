@@ -28,6 +28,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
       href={`/pokemon?id=${pokemonId}`}
       className="border-8 w-64 h-96 rounded-2xl border-yellow-200 p-2 ease-out duration-300 sm:hover:translate-x-1 sm:hover:translate-y-1 sm:hover:shadow-none shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.30)]"
       style={{ backgroundColor: backgroundColorCard }}
+      title={`View details of ${name}`}
     >
       <h2 className=" font-bold mb-2">{name}</h2>
       <div
