@@ -29,6 +29,10 @@ const GRAPHQL = graphql`
         habitat: pokemon_v2_pokemonhabitat {
           name
         }
+        capture_rate
+        pokemon_v2_generation {
+          name
+        }
         evolutionChain: pokemon_v2_evolutionchain {
           pokemon_v2_pokemonspecies {
             name
@@ -48,12 +52,13 @@ export const Pokemon = ({ pokemonId }: { pokemonId: number }) => {
   const data = useLazyLoadQuery<PokemonQuery>(GRAPHQL, { pokemonId })
   // To help
   console.log(data)
-
+  const [displayFront, setDisplayFront] = useState(true)
   const pokemonTypes = data?.pokemon?.pokemon_v2_pokemontypes
   const habitat = data?.pokemon?.specy?.habitat
   const evolutionChain = data?.pokemon?.specy?.evolutionChain
   const cries = data?.pokemon?.pokemon_v2_pokemoncries
-  console.log(cries)
+  const generation = data?.pokemon?.specy?.pokemon_v2_generation
+  const captureRate = data?.pokemon?.specy?.capture_rate
 
   // Play the audio sound of the pokemon
   const playCry = () => {
@@ -65,9 +70,6 @@ export const Pokemon = ({ pokemonId }: { pokemonId: number }) => {
       }
     }
   }
-
-  console.log(data.pokemon?.sprites[0].sprites)
-  const [displayFront, setDisplayFront] = useState(true)
 
   const togglePicture = () => {
     setDisplayFront(!displayFront)
@@ -87,14 +89,16 @@ export const Pokemon = ({ pokemonId }: { pokemonId: number }) => {
       <main>
         <section className="flex items-center md:items-start flex-col-reverse md:flex-row justify-between sm:border sm:shadow-lg p-5">
           <div className="text-base sm:text-xl lg:text-2xl flex flex-col justify-around py-3">
-            <span className="font-semibold">
+            <span className=" uppercase font-semibold pb-3">{generation?.name}</span>
+            <span className="font-semibold ">
               {data?.pokemon?.name} {data.pokemon?.specy?.is_legendary ? 'is legendary !' : 'is not legendary'}
             </span>
+            <span>{`Capture rate : ${captureRate}`}</span>
             <span>Height : {convertDecimeterToCmAndMeter(data?.pokemon?.height)}</span>
             <span>Weight : {convertHectogramToKg(data?.pokemon?.weight)}</span>
             <div className="mt-4 flex items-center">
               <span className="font-bold">Pokemon {pokemonTypes && pokemonTypes?.length > 1 ? 'Types' : 'Type'}:</span>
-              <div className="flex  ">
+              <div className="flex ">
                 {pokemonTypes?.map((type, index) => {
                   return (
                     <span className="bg-slate-200 rounded-md p-2 ml-2 " key={index}>
@@ -121,14 +125,14 @@ export const Pokemon = ({ pokemonId }: { pokemonId: number }) => {
             />
             <div className=" flex justify-evenly pb-3">
               <button
-                className="font-bold text-sm w-20 h-16 rounded-full bg-white shadow-[2px_2px_2px_2px_#2d3748] border rounded ease-out duration-300 hover:translate-x-1 hover:translate-y-1 hover:shadow-none md:text-base"
+                className="font-bold text-sm w-20 h-16 rounded-full bg-white shadow-[2px_2px_2px_2px_#2d3748] border rounded ease-out duration-300 sm:hover:translate-x-1 sm:hover:translate-y-1 sm:hover:shadow-none md:text-base"
                 onClick={togglePicture}
               >
                 {displayFront ? 'Back' : 'Front'}
               </button>
 
               <button
-                className="font-bold text-sm  w-20 h-16 rounded-full bg-white shadow-[2px_2px_2px_2px_#2d3748] border ease-out duration-300 hover:translate-x-1 hover:translate-y-1 hover:shadow-none md:text-base"
+                className="font-bold text-sm  w-20 h-16 rounded-full bg-white shadow-[2px_2px_2px_2px_#2d3748] border ease-out duration-300 sm:hover:translate-x-1 sm:hover:translate-y-1 sm:hover:shadow-none md:text-base"
                 onClick={playCry}
               >
                 Sound
@@ -136,15 +140,15 @@ export const Pokemon = ({ pokemonId }: { pokemonId: number }) => {
             </div>
           </div>
         </section>
-        <section className=" my-7">
-          <h3 className="font-bold text-xl mb-7">Evolution of the pokemon</h3>
+        <section className="my-7 flex flex-col items-center">
+          <h3 className="font-bold text-lg sm:text-xl lg:text-2xl mb-7">Evolution of the pokemon</h3>
           <div className="flex">
             {evolutionChain?.pokemon_v2_pokemonspecies?.map((pokemon, index) => (
               <Link href={`pokemon?id=${pokemon.pokeId}`} key={index} className="flex items-center">
-                <button className="font-bold text-sm px-3 h-16 rounded-full bg-yellow-200 shadow-[2px_2px_2px_2px_#2d3748] border ease-out duration-300 hover:translate-x-1 hover:translate-y-1 hover:shadow-none md:text-base">
+                <button className="font-bold text-sm px-3 h-12 sm:h-16 rounded-full bg-yellow-200 shadow-md border ease-out duration-300 hover:translate-x-1 hover:translate-y-1 hover:shadow-none md:text-base">
                   {pokemon.name}
                 </button>
-                {index !== evolutionChain?.pokemon_v2_pokemonspecies?.length - 1 && <ArrowIcon size={34} flip />}
+                {index !== evolutionChain?.pokemon_v2_pokemonspecies?.length - 1 && <ArrowIcon size={24} flip />}
               </Link>
             ))}
           </div>
