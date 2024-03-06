@@ -53,7 +53,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
           </span>
         ))}
       </div>
-      <div className=" mt-3 flex justify-center">
+      <div className="mt-3 flex justify-center">
         {types.map(type => (
           <span key={type.name} className="text-sm bg-white rounded px-1 mx-2">
             {type.pokemon_v2_type.name}

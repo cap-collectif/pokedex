@@ -82,12 +82,12 @@ export const Pokemon = ({ pokemonId }: { pokemonId: number }) => {
         >
           <ArrowIcon size={64} /> Back
         </Link>
-        <h1 className=" font-bold text-3xl">{data?.pokemon?.name}</h1>
+        <h1 className=" uppercase font-bold text-3xl">{data?.pokemon?.name}</h1>
       </header>
       <main>
-        <section className="flex justify-between">
+        <section className="flex justify-between border shadow-lg p-5">
           <div className="text-xl flex flex-col justify-around">
-            <span>
+            <span className=" font-semibold">
               {data?.pokemon?.name} {data.pokemon?.specy?.is_legendary ? 'is legendary !' : 'is not legendary'}
             </span>
             <span>Height : {convertDecimeterToCmAndMeter(data?.pokemon?.height)}</span>
@@ -128,7 +128,7 @@ export const Pokemon = ({ pokemonId }: { pokemonId: number }) => {
               </button>
 
               <button
-                className="font-bold text-sm  w-20 h-16 rounded-full bg-white shadow-[2px_2px_2px_2px_#2d3748] border rounded ease-out duration-300 hover:translate-x-1 hover:translate-y-1 hover:shadow-none md:text-base"
+                className="font-bold text-sm  w-20 h-16 rounded-full bg-white shadow-[2px_2px_2px_2px_#2d3748] border ease-out duration-300 hover:translate-x-1 hover:translate-y-1 hover:shadow-none md:text-base"
                 onClick={playCry}
               >
                 Sound
@@ -136,11 +136,19 @@ export const Pokemon = ({ pokemonId }: { pokemonId: number }) => {
             </div>
           </div>
         </section>
-        <div>
-          {evolutionChain?.pokemon_v2_pokemonspecies?.map((pokemon, index) => (
-            <span key={index}>{pokemon.name}</span>
-          ))}
-        </div>
+        <section className=" my-7">
+          <h3 className="font-bold text-xl mb-7">Evolution of the pokemon</h3>
+          <div className="flex">
+            {evolutionChain?.pokemon_v2_pokemonspecies?.map((pokemon, index) => (
+              <Link href={`pokemon?id=${pokemon.pokeId}`} key={index} className="flex items-center">
+                <button className="font-bold text-sm px-3 h-16 rounded-full bg-yellow-200 shadow-[2px_2px_2px_2px_#2d3748] border ease-out duration-300 hover:translate-x-1 hover:translate-y-1 hover:shadow-none md:text-base">
+                  {pokemon.name}
+                </button>
+                {index !== evolutionChain?.pokemon_v2_pokemonspecies?.length - 1 && <ArrowIcon size={34} flip />}
+              </Link>
+            ))}
+          </div>
+        </section>
       </main>
     </body>
   )
