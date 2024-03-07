@@ -10,10 +10,10 @@ export const convertDecimeterToCmAndMeter = (value: number | null | undefined): 
   if (meters > 0) {
     result += `${meters}m`
     if (centimeters > 0) {
-      result += `${centimeters}` // Add centimeters to meters with a dot
+      result += `${centimeters}`
     }
   } else {
-    result += `${centimeters}cm` // No meters, add centimeters with "cm" suffix
+    result += `${centimeters}cm`
   }
 
   return result

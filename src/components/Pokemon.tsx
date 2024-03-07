@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { convertDecimeterToCmAndMeter } from '@/utils/convertDecimeterToCmAndMeter'
 import { convertHectogramToKg } from '@/utils/convertHectogramToKg'
+import RoundBtn from './buttons/RoundBtn'
 
 const GRAPHQL = graphql`
   query PokemonQuery($pokemonId: Int!) {
@@ -122,21 +123,12 @@ export const Pokemon = ({ pokemonId }: { pokemonId: number }) => {
               className="w-full h-52 object-contain "
             />
             <div className=" flex justify-evenly pb-3">
-              <button
-                className="font-bold text-sm w-20 h-16 rounded-full bg-white shadow-[2px_2px_2px_2px_#2d3748] border  ease-out duration-300 sm:hover:translate-x-1 sm:hover:translate-y-1 sm:hover:shadow-none md:text-base"
-                onClick={togglePicture}
-                aria-label={displayFront ? 'Show Back Picture' : 'Show Front Picture'}
-              >
+              <RoundBtn onClick={togglePicture} ariaLabel={displayFront ? 'Show Back Picture' : 'Show Front Picture'}>
                 {displayFront ? 'Back' : 'Front'}
-              </button>
-
-              <button
-                className="font-bold text-sm  w-20 h-16 rounded-full bg-white shadow-[2px_2px_2px_2px_#2d3748] border ease-out duration-300 sm:hover:translate-x-1 sm:hover:translate-y-1 sm:hover:shadow-none md:text-base"
-                onClick={playCry}
-                aria-label="Play Pokemon Sound"
-              >
+              </RoundBtn>
+              <RoundBtn onClick={playCry} ariaLabel="Play Pokemon Sound">
                 Sound
-              </button>
+              </RoundBtn>
             </div>
           </div>
         </section>
