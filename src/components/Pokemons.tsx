@@ -1,42 +1,111 @@
-/* eslint-disable @next/next/no-img-element */
 import { graphql, useLazyLoadQuery } from 'react-relay'
 import { PokemonsQuery } from '../../__generated__/PokemonsQuery.graphql'
-import Link from 'next/link'
+import { useState } from 'react'
+import PokemonCard from './PokemonCard'
 
-const GRAPHQL = graphql`
-  query PokemonsQuery {
-    pokemons: pokemon_v2_pokemon(limit: 151) {
-      pokemonId: id
-      name
-      sprites: pokemon_v2_pokemonsprites {
-        sprites
+export const Pokemons = () => {
+  const [search, setSearch] = useState('')
+  const [searchQuery, setSearchQuery] = useState('')
+  const searchapi = `${searchQuery}%`
+
+  const GRAPHQL = graphql`
+    query PokemonsQuery($searchapi: String!) {
+      pokemons: pokemon_v2_pokemonspecies(limit: 150, where: { name: { _ilike: $searchapi } }) {
+        name
+        pokemonId: id
+        pokemon_v2_pokemons {
+          weight
+          height
+          pokemon_v2_pokemontypes {
+            pokemon_v2_type {
+              name
+            }
+          }
+          pokemon_v2_pokemonabilities {
+            pokemon_v2_ability {
+              name
+            }
+          }
+        }
+
+        pokemonColor: pokemon_v2_pokemoncolor {
+          pokemonId: id
+          name
+        }
       }
     }
+  `
+
+  const data = useLazyLoadQuery<PokemonsQuery>(GRAPHQL, { searchapi })
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setSearchQuery(search)
   }
-`
 
-// TODO : Add a bit of styling
-export const Pokemons = () => {
-  const data = useLazyLoadQuery<PokemonsQuery>(GRAPHQL, {})
-
-  // To help
-  console.log(data)
+  const handleClear = () => {
+    setSearchQuery('')
+    setSearch('')
+  }
 
   return (
-    <div className="p-4">
-      <h1 className="mb-5">Pokemons :</h1>
-      <div className="grid grid-cols-4 gap-4">
+    <div className="p-4 ">
+      <h1 className="mb-5 text-2xl font-extrabold">POKEDEX</h1>
+      <form
+        role="search"
+        aria-label="Search for a pokemon"
+        onSubmit={handleSubmit}
+        className=" bg-red-400 p-2 sm:p-6 rounded-xl shadow-lg flex-nowrap flex"
+      >
+        <label htmlFor="search-input" className="sr-only">
+          Search for a pokemon
+        </label>
+        <input
+          id="search-input"
+          type="text"
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          placeholder="Search for a pokemon"
+          className=" text-sm sm:text-lg p-1 sm:p-4 rounded-lg w-full uppercase "
+        />
+        <button
+          type="submit"
+          aria-label="Search"
+          className="font-bold text-sm sm:py-4 sm:px-3 bg-white shadow-[2px_2px_2px_2px_#2d3748] border  rounded ease-out duration-300 sm:hover:translate-x-1 sm:hover:translate-y-1 sm:hover:shadow-none md:text-base mx-4"
+        >
+          Search
+        </button>
+        <button
+          type="button"
+          onClick={() => handleClear()}
+          aria-label="Clear"
+          className="font-bold text-sm  w-20 sm:h-16 rounded-full bg-white shadow-[2px_2px_2px_2px_#2d3748] border  ease-out duration-300 sm:hover:translate-x-1 sm:hover:translate-y-1 sm:hover:shadow-none md:text-base"
+        >
+          Clear
+        </button>
+      </form>
+      <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-5 mt-5 place-items-center">
         {data.pokemons.map(pokemon => {
-          const sprite = pokemon?.sprites[0]?.sprites?.front_default
+          const { pokemonId, name, pokemon_v2_pokemons, pokemonColor } = pokemon
+
           return (
-            <div key={pokemon.pokemonId}>
-              <div>Name: {pokemon.name}</div>
-              <img src={sprite} alt={pokemon.name} />
-              <Link href={`/pokemon?id=${pokemon.pokemonId}`}>Infos</Link>
-            </div>
+            <PokemonCard
+              key={pokemon.pokemonId}
+              pokemon={{
+                pokemonId: pokemonId,
+                name: name,
+                weight: pokemon_v2_pokemons[0]?.weight,
+                height: pokemon_v2_pokemons[0]?.height,
+                color: pokemonColor?.name,
+                abilities: pokemon_v2_pokemons[0]?.pokemon_v2_pokemonabilities as {
+                  pokemon_v2_ability: { name: string }
+                }[],
+                types: pokemon_v2_pokemons[0]?.pokemon_v2_pokemontypes as { pokemon_v2_type: { name: string } }[],
+              }}
+            />
           )
         })}
-      </div>
+      </section>
     </div>
   )
 }
