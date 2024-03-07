@@ -48,7 +48,6 @@ const GRAPHQL = graphql`
   }
 `
 
-// TODO : If I had a bit more time, I would improve my code by making reusable button components. It would make the code less repetitive.
 export const Pokemon = ({ pokemonId }: { pokemonId: number }) => {
   const data = useLazyLoadQuery<PokemonQuery>(GRAPHQL, { pokemonId })
   const [displayFront, setDisplayFront] = useState(true)
